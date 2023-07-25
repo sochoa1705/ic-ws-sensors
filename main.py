@@ -6,10 +6,7 @@ import paho.mqtt.client as mqtt
 import json
 
 app = Flask(__name__)
-app.config['MONGO_URI'] = 'mongodb://mongo:bsYUWlge9whaYGDPcBi3@containers-us-west-68.railway.app:6326'
-app.config['MONGO_DBNAME'] = 'test'
-app.config['MONGO_USERNAME'] = 'mongo'
-app.config['MONGO_PASSWORD'] = 'bsYUWlge9whaYGDPcBi3'
+app.config['MONGO_URI'] = 'mongodb://mongo:vX1CwkraCUGla8Q6YM1R@containers-us-west-106.railway.app:6367/ic_dashboard'
 mongo = PyMongo(app)
 live_data = []
 
