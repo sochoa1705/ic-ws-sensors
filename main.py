@@ -1,13 +1,15 @@
 from flask import Flask, jsonify
 from flask_cors import CORS
 from flask_pymongo import PyMongo
+import pymongo
 from datetime import datetime
 import paho.mqtt.client as mqtt
 import json
 
 app = Flask(__name__)
 app.config['MONGO_URI'] = 'mongodb://mongo:1UdaRkEWi4PZBsRoGYkw@containers-us-west-39.railway.app:6861/ic_dashboard'
-mongo = PyMongo(app)
+mongo = pymongo.MongoClient(app.config['MONGO_URI'])
+
 live_data = []
 
 # Enable CORS
