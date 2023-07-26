@@ -64,7 +64,7 @@ def get_live_data():
 
 
 @app.route('/api/v1/sensors/live-data/temperature', methods=['GET'])
-def get_live_data_by_temperature(temperature):
+def get_live_data_by_temperature():
     response = []
     for data in live_data:
         response.append({
