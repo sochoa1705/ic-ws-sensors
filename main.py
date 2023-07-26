@@ -7,9 +7,8 @@ import paho.mqtt.client as mqtt
 import json
 
 app = Flask(__name__)
-app.config['MONGO_URI'] = 'mongodb://mongo:1UdaRkEWi4PZBsRoGYkw@containers-us-west-39.railway.app:6861/ic_dashboard'
-mongo = pymongo.MongoClient(app.config['MONGO_URI'])
-
+app.config['MONGO_URI'] = 'mongodb://mongo:lm60EQyO4jiObTT2QOqh@containers-us-west-39.railway.app:7002/ic_dashboard'
+mongo = PyMongo(app)
 live_data = []
 
 # Enable CORS
