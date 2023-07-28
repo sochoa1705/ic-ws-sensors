@@ -116,7 +116,7 @@ def get_storage_data_by_temperature():
             '_id': str(doc['_id']),
             'temperature_1': doc['payloadDecoded']['temperature_1'],
             'inserted_at':
-doc['payloadDecoded']['inserted_at']
+doc['inserted_at']
         })
 
     return jsonify(temperatures)
@@ -131,7 +131,7 @@ def get_storage_data_by_relative_humidity():
             '_id': str(doc['_id']),
             'relative_humidity_2': doc['payloadDecoded']['relative_humidity_2'],
             'inserted_at':
-doc['payloadDecoded']['inserted_at']
+doc['inserted_at']
          })
 
     return jsonify(r_humidity)
@@ -146,7 +146,7 @@ def get_storage_data_by_luminosity():
             '_id': str(doc['_id']),
             'luminosity_3': doc['payloadDecoded']['luminosity_3'],
             'inserted_at':
-doc['payloadDecoded']['inserted_at']
+doc['inserted_at']
         })
     return jsonify(luminosities)
 
@@ -159,7 +159,7 @@ def get_storage_data_by_barometric_pressure():
         '_id': str(doc['_id']),
         'barometric_pressure_4': doc['payloadDecoded']['barometric_pressure_4'],
         'inserted_at':
-doc['payloadDecoded']['inserted_at']
+doc['inserted_at']
         })
     return jsonify(barometric_pressures)
 
