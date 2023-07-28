@@ -58,7 +58,7 @@ def connect():
     return "Connected to MQTT broker"
 
 
-@app.route('/api/v1/sensors/live-data/', methods=['GET'])
+@app.route('/api/v1/sensors/live-data', methods=['GET'])
 def get_live_data():
     return jsonify(live_data)
 
@@ -109,6 +109,20 @@ def get_live_data_by_barometric_pressure():
             'inserted_at': data['inserted_at']
         })
     return jsonify(response)
+
+
+@app.route('/api/v1/sensors/storage-data', methods=['GET'])
+def get_storage_data():
+    storage_data = []
+    cursor = mongo.db.sensor_data.find({}, {"payloadDecoded": 1, "inserted_at": 1})
+    for doc in cursor:
+        storage_data.append({
+            '_id': str(doc['_id']),
+            'payloadDecoded': doc['payloadDecoded'],
+            'inserted_at': doc['inserted_at']
+        })
+
+    return jsonify(storage_data)
 
 
 @app.route('/api/v1/sensors/storage-data/temperature', methods=['GET'])
