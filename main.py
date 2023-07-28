@@ -114,8 +114,7 @@ def get_storage_data_by_temperature():
     for doc in cursor:
         temperatures.append({
             '_id': str(doc['_id']),
-            'temperature_1': doc['payloadDecoded']['temperature_1'],
-            'inserted_at': doc['inserted_at']
+            'temperature_1': doc['payloadDecoded']['temperature_1']
         })
 
     return jsonify(temperatures)
@@ -128,9 +127,8 @@ def get_storage_data_by_relative_humidity():
     for doc in cursor_hum:
         r_humidity.append({
             '_id': str(doc['_id']),
-            'relative_humidity_2': doc['payloadDecoded']['relative_humidity_2'],
-            'inserted_at': doc['inserted_at']
-         })
+            'relative_humidity_2': doc['payloadDecoded']['relative_humidity_2']
+        })
 
     return jsonify(r_humidity)
 
@@ -142,8 +140,7 @@ def get_storage_data_by_luminosity():
     for doc in cursor_lum:
         luminosities.append({
             '_id': str(doc['_id']),
-            'luminosity_3': doc['payloadDecoded']['luminosity_3'],
-            'inserted_at': doc['inserted_at']
+            'luminosity_3': doc['payloadDecoded']['luminosity_3']
         })
     return jsonify(luminosities)
 
@@ -154,8 +151,7 @@ def get_storage_data_by_barometric_pressure():
     for doc in cursor:
         barometric_pressures.append({
         '_id': str(doc['_id']),
-        'barometric_pressure_4': doc['payloadDecoded']['barometric_pressure_4'],
-        'inserted_at': doc['inserted_at']
+        'barometric_pressure_4': doc['payloadDecoded']['barometric_pressure_4']
         })
     return jsonify(barometric_pressures)
 
