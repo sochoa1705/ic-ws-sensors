@@ -69,7 +69,8 @@ def get_live_data_by_temperature():
     for data in live_data:
         response.append({
             '_id': str(data['_id']),
-            'temperature_1': data['payloadDecoded']['temperature_1']
+            'temperature_1': data['payloadDecoded']['temperature_1'],
+            'inserted_at': data['inserted_at']
         })
     return jsonify(response)
 
@@ -80,7 +81,8 @@ def get_live_data_by_relative_humidity():
     for data in live_data:
         response.append({
             '_id': str(data['_id']),
-            'relative_humidity_2': data['payloadDecoded']['relative_humidity_2']
+            'relative_humidity_2': data['payloadDecoded']['relative_humidity_2'],
+            'inserted_at': data['inserted_at']
         })
     return jsonify(response)
 
@@ -91,7 +93,8 @@ def get_live_data_by_luminosity():
     for data in live_data:
         response.append({
             '_id': str(data['_id']),
-            'luminosity_3': data['payloadDecoded']['luminosity_3']
+            'luminosity_3': data['payloadDecoded']['luminosity_3'],
+            'inserted_at': data['inserted_at']
         })
     return jsonify(response)
 
@@ -102,7 +105,8 @@ def get_live_data_by_barometric_pressure():
     for data in live_data:
         response.append({
             '_id': str(data['_id']),
-            'barometric_pressure_4': data['payloadDecoded']['barometric_pressure_4']
+            'barometric_pressure_4': data['payloadDecoded']['barometric_pressure_4'],
+            'inserted_at': data['inserted_at']
         })
     return jsonify(response)
 
@@ -110,11 +114,12 @@ def get_live_data_by_barometric_pressure():
 @app.route('/api/v1/sensors/storage-data/temperature', methods=['GET'])
 def get_storage_data_by_temperature():
     temperatures = []
-    cursor = mongo.db.sensor_data.find({}, {"payloadDecoded.temperature_1": 1})
+    cursor = mongo.db.sensor_data.find({}, {"payloadDecoded.temperature_1": 1, "inserted_at": 1})
     for doc in cursor:
         temperatures.append({
             '_id': str(doc['_id']),
-            'temperature_1': doc['payloadDecoded']['temperature_1']
+            'temperature_1': doc['payloadDecoded']['temperature_1'],
+            'inserted_at': doc['inserted_at']
         })
 
     return jsonify(temperatures)
@@ -123,11 +128,12 @@ def get_storage_data_by_temperature():
 @app.route('/api/v1/sensors/storage-data/relative-humidity', methods=['GET'])
 def get_storage_data_by_relative_humidity():
     r_humidity = []
-    cursor_hum = mongo.db.sensor_data.find({}, {"payloadDecoded.relative_humidity_2": 1})
+    cursor_hum = mongo.db.sensor_data.find({}, {"payloadDecoded.relative_humidity_2": 1, "inserted_at": 1})
     for doc in cursor_hum:
         r_humidity.append({
             '_id': str(doc['_id']),
-            'relative_humidity_2': doc['payloadDecoded']['relative_humidity_2']
+            'relative_humidity_2': doc['payloadDecoded']['relative_humidity_2'],
+            'inserted_at': doc['inserted_at']
         })
 
     return jsonify(r_humidity)
@@ -136,22 +142,25 @@ def get_storage_data_by_relative_humidity():
 @app.route('/api/v1/sensors/storage-data/luminosity', methods=['GET'])
 def get_storage_data_by_luminosity():
     luminosities = []
-    cursor_lum = mongo.db.sensor_data.find({}, {"payloadDecoded.luminosity_3": 1})
+    cursor_lum = mongo.db.sensor_data.find({}, {"payloadDecoded.luminosity_3": 1, "inserted_at": 1})
     for doc in cursor_lum:
         luminosities.append({
             '_id': str(doc['_id']),
-            'luminosity_3': doc['payloadDecoded']['luminosity_3']
+            'luminosity_3': doc['payloadDecoded']['luminosity_3'],
+            'inserted_at': doc['inserted_at']
         })
     return jsonify(luminosities)
+
 
 @app.route('/api/v1/sensors/storage-data/barometric-pressure', methods=['GET'])
 def get_storage_data_by_barometric_pressure():
     barometric_pressures = []
-    cursor = mongo.db.sensor_data.find({}, {"payloadDecoded.barometric_pressure_4": 1})
+    cursor = mongo.db.sensor_data.find({}, {"payloadDecoded.barometric_pressure_4": 1, "inserted_at": 1})
     for doc in cursor:
         barometric_pressures.append({
-        '_id': str(doc['_id']),
-        'barometric_pressure_4': doc['payloadDecoded']['barometric_pressure_4']
+            '_id': str(doc['_id']),
+            'barometric_pressure_4': doc['payloadDecoded']['barometric_pressure_4'],
+            'inserted_at': doc['inserted_at']
         })
     return jsonify(barometric_pressures)
 
