@@ -60,6 +60,13 @@ def connect():
 
 @app.route('/api/v1/sensors/live-data', methods=['GET'])
 def get_live_data():
+    response = []
+    for data in live_data:
+        response.append({
+            '_id': str(data['_id']),
+            'payloadDecoded': data['payloadDecoded'],
+            'inserted_at': data['inserted_at']
+        })
     return jsonify(live_data)
 
 
