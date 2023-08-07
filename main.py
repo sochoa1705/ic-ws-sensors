@@ -64,8 +64,7 @@ def get_live_data():
     for data in live_data:
         response.append({
             '_id': str(data['_id']),
-            'payloadDecoded': data['payloadDecoded'],
-            'inserted_at': data['inserted_at']
+            'payloadDecoded': data['payloadDecoded']
         })
     return jsonify(live_data)
 
