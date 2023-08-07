@@ -66,7 +66,7 @@ def get_live_data():
             '_id': str(data['_id']),
             'payloadDecoded': data['payloadDecoded']
         })
-    return jsonify(live_data)
+    return jsonify(response)
 
 
 @app.route('/api/v1/sensors/live-data/temperature', methods=['GET'])
