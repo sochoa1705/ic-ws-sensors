@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 from flask_pymongo import PyMongo
 import pymongo
@@ -10,6 +10,7 @@ app = Flask(__name__)
 app.config['MONGO_URI'] = 'mongodb+srv://saochoa1:bgiT6rF3J4EzjVDa@clusterdashboardic.erg0gfr.mongodb.net/ic_dashboard'
 mongo = PyMongo(app)
 live_data = []
+sensor_data = mongo.db.sensor_data
 
 # Enable CORS
 CORS(app)
@@ -184,6 +185,145 @@ def get_storage_data_by_barometric_pressure():
         })
     return jsonify(barometric_pressures)
 
+
+@app.route('/api/v1/average-temperature', methods=['GET'])
+def get_average_temperature():
+    year = request.args.get('year', type=int)
+
+    if year is None:
+        return jsonify({"error": "Debes proporcionar un año válido"}), 400
+
+    aggregation_pipeline = [
+        {
+            "$match": {
+                "inserted_at": {
+                    "$regex": f"^{year}-\\d{{2}}",
+                }
+            }
+        },
+        {
+            "$group": {
+                "_id": {"month": {"$substr": ["$inserted_at", 5, 2]}},
+                "average": {"$avg": "$payloadDecoded.temperature_1"}
+            }
+        },
+        {
+            "$project": {
+                "_id": 0,
+                "month": "$_id.month",
+                "average": 1
+            }
+        }
+    ]
+
+    result = list(sensor_data.aggregate(aggregation_pipeline))
+
+    return jsonify(result)
+
+
+@app.route('/api/v1/average-luminosity', methods=['GET'])
+def get_average_luminosity():
+    year = request.args.get('year', type=int)
+
+    if year is None:
+        return jsonify({"error": "Debes proporcionar un año válido"}), 400
+
+    aggregation_pipeline = [
+        {
+            "$match": {
+                "inserted_at": {
+                    "$regex": f"^{year}-\\d{{2}}",
+                }
+            }
+        },
+        {
+            "$group": {
+                "_id": {"month": {"$substr": ["$inserted_at", 5, 2]}},
+                "average": {"$avg": "$payloadDecoded.luminosity_3"}
+            }
+        },
+        {
+            "$project": {
+                "_id": 0,
+                "month": "$_id.month",
+                "average": 1
+            }
+        }
+    ]
+
+    result = list(sensor_data.aggregate(aggregation_pipeline))
+
+    return jsonify(result)
+
+
+@app.route('/api/v1/average-barometric-pressure', methods=['GET'])
+def get_average_barometric_pressure():
+    year = request.args.get('year', type=int)
+
+    if year is None:
+        return jsonify({"error": "Debes proporcionar un año válido"}), 400
+
+    aggregation_pipeline = [
+        {
+            "$match": {
+                "inserted_at": {
+                    "$regex": f"^{year}-\\d{{2}}",
+                }
+            }
+        },
+        {
+            "$group": {
+                "_id": {"month": {"$substr": ["$inserted_at", 5, 2]}},
+                "average": {"$avg": "$payloadDecoded.barometric_pressure_4"}
+            }
+        },
+        {
+            "$project": {
+                "_id": 0,
+                "month": "$_id.month",
+                "average": 1
+            }
+        }
+    ]
+
+    result = list(sensor_data.aggregate(aggregation_pipeline))
+
+    return jsonify(result)
+
+
+@app.route('/api/v1/average-humidity', methods=['GET'])
+def get_average_humidity():
+    year = request.args.get('year', type=int)
+
+    if year is None:
+        return jsonify({"error": "Debes proporcionar un año válido"}), 400
+
+    aggregation_pipeline = [
+        {
+            "$match": {
+                "inserted_at": {
+                    "$regex": f"^{year}-\\d{{2}}",
+                }
+            }
+        },
+        {
+            "$group": {
+                "_id": {"month": {"$substr": ["$inserted_at", 5, 2]}},
+                "average": {"$avg": "$payloadDecoded.relative_humidity_2"}
+            }
+        },
+        {
+            "$project": {
+                "_id": 0,
+                "month": "$_id.month",
+                "average": 1
+            }
+        }
+    ]
+
+    result = list(sensor_data.aggregate(aggregation_pipeline))
+
+    return jsonify(result)
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000, debug=True)
